@@ -1,25 +1,38 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { SearchIcon, X } from "lucide-react";
-import { fetchData } from "../service.js";
+// import { fetchData } from "../service.js";
 import "../css/Search.css";
 import { Link } from "react-router-dom";
-
 
 const Search = () => {
   const [searchedTerm, setSearchedTerm] = useState("Burger");
   const [data, setData] = useState(null);
 
-  const searchRecipe = (searchQuery) => {
+  const fetchData = async (defaultQuery) => {
+    try {
+      const data = await fetch(
+        `https://api.edamam.com/api/recipes/v2?type=public&q=${defaultQuery}&app_id=62bce0a0&app_key=ff388c0331eb479573c52e7112fa70bc`
+      );
+      const response = data.json();
+      console.log(response);
+      return response;
+    } catch (err) {
+      console.log(err, "Error fetching something went wrong");
+      return err;
+    }
+  };
+
+  const searchRecipe = useCallback((searchQuery) => {
     fetchData(searchQuery).then((response) => {
       setData(response);
     });
-  };
+  }, [setData]); 
 
   useEffect(() => {
     if (searchedTerm) {
       searchRecipe(searchedTerm);
     }
-  }, [searchedTerm]);
+  }, [searchRecipe, searchedTerm]);
 
   const renderRecipeCards = () => {
     if (!data) return null;
@@ -112,7 +125,6 @@ const Search = () => {
         </div>
       </div>
       <div className="w-full bg-gradient-to-r from-pink-600 to-purple-600 h-96"></div>
-
     </div>
   );
 };

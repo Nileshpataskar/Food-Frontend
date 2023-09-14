@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { Route, Routes } from "react-router-dom";
-import Navbar from "./components/Navbar";
+// import Navbar from "./components/Navbar";
 import Activity from "./components/Activity";
 import Search from "./components/Search";
 import Footer from "./components/Footer";
 import Recipe from "./components/Recipe";
 import Home from "./components/Home";
 import Ideas from "./components/Ideas";
-import MobNavbar from './components/MobNavbar';
+import MobNavbar from "./components/MobNavbar";
+import Saves from "./components/Saves";
 
 const App = () => {
-
   const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
@@ -23,20 +23,19 @@ const App = () => {
     return () => {
       window.removeEventListener("resize", setSize);
     };
-  }, []);
+  }, [isMobile]);
 
   return (
     <div>
-      {isMobile ? <MobNavbar/> : <Navbar/>}
+      <MobNavbar />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/activity" element={<Activity />} />
         <Route path="/search" element={<Search />} />
         <Route path="/recipe/:recipeId" element={<Recipe />} />
 
-        <Route path="/ideas" element={<Ideas/>} />
-
-
+        <Route path="/ideas" element={<Ideas />} />
+        <Route path="/saves" element={<Saves />} />
       </Routes>
       <Footer />
     </div>
@@ -44,4 +43,3 @@ const App = () => {
 };
 
 export default App;
-

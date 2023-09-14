@@ -1,26 +1,43 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-// import Ideas from "./Ideas"; // Import the Ideas component
+import {Heart} from "lucide-react"
 
 const Home = () => {
   // const [loading, setLoading] = useState(true);
+  const [comments, setComments] = useState([]); // Initialize as an empty array
 
   const navigate = useNavigate();
 
   const handleCategoryClick = (newCategory, newTitle) => {
     navigate("/ideas", { state: { category: newCategory, title: newTitle } });
   };
+
+  useEffect(() => {
+    // Fetch data from the API
+    fetch("https://foodbackend-5bdj.onrender.com/fetchcomments")
+      .then((response) => response.json())
+      .then((data) => {
+        // Assuming the data is an array of comments
+        setComments(data.Result);
+
+        console.log("Data", data.Result);
+      })
+      .catch((error) => {
+        console.error("Error fetching data:", error);
+      });
+  }, [comments]);
+
   return (
     <div className="m-4 sm:m-8 sm:my-5 md:m-30 md:my-10">
       {/* Breakfast Section */}
-      <div className="relative">
+      <div className="relative ">
         <img
           src="https://img.sndimg.com/food/image/upload/f_auto,c_thumb,q_55,w_1280,ar_16:9/v1/img/recipes/24/25/3/l3Fx6AnTcGOjhwYNhggo_0S9A9332.jpg"
           alt="grilled chicken"
           loading="eager"
-          className="w-full rounded-lg"
+          className="w-full rounded-lg "
         />
-        <div className="flex flex-col">
+        <div className="flex flex-col ">
           <h1 className="sm:absolute sm:top-[45%] md:left-32 sm:left-10 text-2xl sm:text-5xl sm:text-white md:text-white text-black font-asap">
             56 GRILLED RECIPE <br /> CHICKEN
           </h1>
@@ -36,11 +53,8 @@ const Home = () => {
         </div>
       </div>
       <div className="w-full h-10 mt-10 mb-14 bg-[#f2f2f2]"></div>
-
-      {/* Dessert Section */}
-      {/* <div className="bg-pink-500">comments</div> */}
-
       {/* Craving Section */}
+
       <div className="mt-5 mb-5">
         <h1 className="my-5 text-2xl font-cabin md:text-4xl">
           WHAT WE'RE CRAVING
@@ -68,7 +82,7 @@ const Home = () => {
           ].map((section, index) => (
             <span
               key={index}
-              className="relative"
+              className="relative "
               onClick={() =>
                 handleCategoryClick(section.category, section.title)
               }
@@ -91,8 +105,76 @@ const Home = () => {
         </div>
       </div>
 
-      {/* explore more */}
+      <div className="w-full h-10 mt-10 mb-14 bg-[#f2f2f2]"></div>
+      
+      {/* comments */}
+      
 
+      <h1 className="my-8 text-2xl md:text-5xl">FRESH FROM OUR COMMUNITY</h1>
+      
+      <div className="flex flex-col justify-between gap-10 md:flex-row ">
+
+      <div className=" relative flex flex-col border-2 h-60 p-4 md:p-10 gap-7 md:h-[400px]  md:w-[445px] w-full   ">
+        <span className="flex items-center gap-4">
+          <img
+            src="https://geniuskitchen.sndimg.com/gk/img/avatar/burger.png"
+            alt="img"
+            className="w-10 rounded-3xl "
+          />
+
+          <p className="text-xl font-cabin ">
+            <span className="text-[#1769c2]">Nilesh </span>
+            reviewed
+            <span className="text-[#1769c2]"> Marinated Chicken Wings</span>
+          </p>
+        </span>
+        <p className="text-[#666] text-xl">All you can eat wing night!</p>
+
+        <h3 className="absolute bottom-6 left-11">4 Hour Ago</h3>
+        <h3 className="absolute flex items-center gap-5 bottom-6 right-11">Reply <span><Heart size={20}/> </span> </h3>
+
+      </div>
+      <div className=" relative flex flex-col border-2 h-60  p-4 md:p-10 gap-7 md:h-[400px]  md:w-[445px]  w-full ">
+        <span className="flex items-center gap-4">
+          <img
+            src="https://geniuskitchen.sndimg.com/gk/img/avatar/burger.png"
+            alt="img"
+            className="w-10 rounded-3xl "
+          />
+
+          <p className="text-xl font-cabin ">
+            <span className="text-[#1769c2]">Jay </span>
+            reviewed
+            <span className="text-[#1769c2]">  Chicken Burger</span>
+          </p>
+        </span>
+        <p className="text-[#666] text-xl">I made it. Very good. Boiled 7 minutes</p>
+
+        <h3 className="absolute bottom-6 left-11">4 Hour Ago</h3>
+        <h3 className="absolute flex items-center gap-5 bottom-6 right-11">Reply <span><Heart size={20}/> </span> </h3>
+
+      </div>
+      <div className=" relative flex flex-col border-2 h-60 p-4  md:p-10 gap-7 md:h-[400px]  md:w-[445px]  w-full ">
+        <span className="flex items-center gap-4">
+          <img
+            src="https://geniuskitchen.sndimg.com/gk/img/avatar/burger.png"
+            alt="img"
+            className="w-10 rounded-3xl "
+          />
+
+          <p className="text-xl font-cabin ">
+            <span className="text-[#1769c2]">Akarsh </span>
+            reviewed
+            <span className="text-[#1769c2]"> BBQ Pizza</span>
+          </p>
+        </span>
+        <p className="text-[#666] text-xl">This recipe is the best! I just add a few drops of lemon juice to the batter-YUMMMY</p>
+
+        <h3 className="absolute bottom-6 left-11">4 Hour Ago</h3>
+        <h3 className="absolute flex items-center gap-5 bottom-6 right-11">Reply <span><Heart size={20}/> </span> </h3>
+      </div>
+      </div>
+      {/* explore more */}
       <div className="mt-10 mb-5 ">
         <h1 className="my-5 text-2xl font-cabin md:text-4xl">EXPLORE MORE</h1>
 
@@ -155,12 +237,10 @@ const Home = () => {
           ))}
         </div>
       </div>
-
       {/* hr */}
       <div className="w-full h-10 mt-10 mb-14 bg-[#f2f2f2]"></div>
 
       {/* trending now */}
-
       <div className="mt-5 mb-5 ">
         <h1 className="my-5 text-2xl font-cabin md:text-4xl">TRENDING NOW</h1>
         <div className="flex flex-wrap gap-10">
@@ -205,9 +285,7 @@ const Home = () => {
           ))}
         </div>
       </div>
-
       {/* dont miss */}
-
       <div className="mt-5 mb-5">
         <h1 className="my-5 text-2xl font-cabin md:text-4xl">DONT MISS</h1>
         <div className="flex flex-wrap sm:justify-between md:justify-between gap-5 w-[100%] h-full items-center">
@@ -257,7 +335,6 @@ const Home = () => {
           ))}
         </div>
       </div>
-
       {/* more Ideas  */}
       <div className="mt-5 mb-5 ">
         <h1 className="my-5 text-2xl font-cabin md:text-4xl">MORE IDEAS</h1>
@@ -303,14 +380,12 @@ const Home = () => {
           ))}
         </div>
       </div>
-
-      <div className="w-full h-10 mt-10 mb-14 bg-[#f2f2f2] " 
-        onClick={handleCategoryClick("peach", "HOW TO PEAL PEACHES, 3 WAYS")}
-      
+      <div
+        className="w-full h-10 mt-10 mb-14 bg-[#f2f2f2] "
+        // onClick={handleCategoryClick("peach", "HOW TO PEAL PEACHES, 3 WAYS")}
       ></div>
-
       <button
-        onClick={handleCategoryClick("peach", "HOW TO PEAL PEACHES, 3 WAYS")}
+      // onClick={handleCategoryClick("peach", "HOW TO PEAL PEACHES, 3 WAYS")}
       >
         <div className="flex flex-col w-full border-2 md:flex-row">
           <img

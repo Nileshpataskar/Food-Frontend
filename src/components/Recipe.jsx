@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import user1 from "../image/user1.png";
 import {
@@ -14,15 +14,28 @@ import {
 } from "lucide-react";
 
 const Recipe = () => {
-
   const navigate = useNavigate(); // Use useNavigate to navigate between routes
 
+  const [comments, setComments] = useState("");
 
-  
   const location = useLocation();
   const recipe = location.state?.recipe || null;
 
   const [serves, setServes] = useState(1); // State for the number of serves
+
+  useEffect(() => {
+    fetch("https://foodbackend-5bdj.onrender.com/fetchcomments")
+      .then((response) => response.json())
+      .then((data) => {
+        // Assuming the data is an array of comments
+        setComments(data.Result);
+
+        console.log("Data", data.Result);
+      })
+      .catch((error) => {
+        console.error("Error fetching data:", error);
+      });
+  }, []);
 
   if (!recipe) {
     return <div>No recipe data found.</div>;
@@ -38,18 +51,27 @@ const Recipe = () => {
     }
   };
 
+  const randomNumber = Math.floor(Math.random() * 10);
+
+  console.log(randomNumber);
+
   return (
     <div>
-       <div className="flex flex-row justify-between h-14 items-center pl-3 pr-3 bg-[#F5CE35] font-cabin">
-        <p onClick={() => navigate(-1)}>{"< "}PREV</p> {/* Use navigate to go back */}
-        <p onClick={() => navigate(1)}>NEXT {" >"}</p> {/* Use navigate to go forward */}
+      {/* {console.log("comment", comments[re])} */}
+      <div className="flex flex-row justify-between h-14 items-center pl-3 pr-3 bg-[#F5CE35] font-cabin">
+        <p onClick={() => navigate(-1)}>{"< "}PREV</p>{" "}
+        {/* Use navigate to go back */}
+        <p onClick={() => navigate(1)}>NEXT {" >"}</p>{" "}
+        {/* Use navigate to go forward */}
       </div>
 
       <div className="ml-4 mr-4 sm:pl-16 sm:pr-16">
         <p className="text-[#1769c2] mt-2 font-normal font-cabin">
           {recipe.mealType.join(", ")}
         </p>
-        <h1 className="text-3xl font-semibold font-cabin">{recipe.label}</h1>
+        <h1 className="text-xl font-semibold md:text-3xl font-cabin">
+          {recipe.label}
+        </h1>
 
         <hr className="border-dashed border-[#757575] mt-5 mb-5" />
 
@@ -67,10 +89,7 @@ const Recipe = () => {
           </div>
 
           <div className="">
-            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Commodi,
-            non. Deleniti in similique dicta, quia cum placeat quisquam ea
-            ducimus odio voluptatibus hic eligendi eos nam dolore
-            exercitationem, voluptatem vitae?
+          "A great afternoon snack! If you don't have a favoured pizza sauce use tomato paste and add some dried Italian herbs. Can be served hot or cold...great for the lunch box."
           </div>
 
           <div className="flex gap-2 mt-5 mb-5">
@@ -154,23 +173,24 @@ const Recipe = () => {
                   <span className="text-sm font-cabin">
                     {ingredient.quantity}
                   </span>
-                  <span className="text-sm text-blue-400 font-cabin">{ingredient.food}</span>
+                  <span className="text-sm text-blue-400 font-cabin">
+                    {ingredient.food}
+                  </span>
                 </li>
               ))}
             </ul>
           </div>
-         
+
           <div className="flex flex-col">
             <h2 className="mt-4 mb-4 text-xl font-cabin">Direction </h2>
             <ul className="flex flex-col gap-5 ">
-            {recipe.ingredientLines.map((line, index) => (
-              <li key={index} className="flex gap-5">
-                <span className="text-sm font-cabin">{line}</span>
-              </li>
-            ))}
+              {recipe.ingredientLines.map((line, index) => (
+                <li key={index} className="flex gap-5">
+                  <span className="text-sm font-cabin">{line}</span>
+                </li>
+              ))}
             </ul>
           </div>
-      
         </div>
       </div>
     </div>
