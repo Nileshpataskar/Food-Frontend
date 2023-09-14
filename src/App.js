@@ -9,6 +9,8 @@ import Home from "./components/Home";
 import Ideas from "./components/Ideas";
 import MobNavbar from "./components/MobNavbar";
 import Saves from "./components/Saves";
+import MyBoards from "./components/Myboard";
+import UserPage from "./components/UserPage";
 
 const App = () => {
   const [isMobile, setIsMobile] = useState(false);
@@ -36,6 +38,10 @@ const App = () => {
 
         <Route path="/ideas" element={<Ideas />} />
         <Route path="/saves" element={<Saves />} />
+        <Route path="/board" element={<MyBoards />} />
+        <Route path="/user" element={<UserPage />} />
+
+
       </Routes>
       <Footer />
     </div>

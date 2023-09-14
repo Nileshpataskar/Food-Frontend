@@ -11,7 +11,7 @@ import { useAuth0 } from "@auth0/auth0-react";
 const MobNavbar = () => {
   const [isMobile, setIsMobile] = useState(false);
   const [openItems, setOpenItems] = useState({});
-  const { isAuthenticated, loginWithRedirect, logout } = useAuth0();
+  const { isAuthenticated, loginWithRedirect, logout} = useAuth0();
   const [showDropdown, setShowDropdown] = useState(false);
 
   const navigate = useNavigate();
@@ -75,9 +75,7 @@ const MobNavbar = () => {
                           <li
                             key={subIndex}
                             className="dropdown-item"
-                            onClick={() =>
-                              handleSubmenuItem(subItem, subItem)
-                            }
+                            onClick={() => handleSubmenuItem(subItem, subItem)}
                           >
                             <Link
                               to="/ideas"
@@ -98,12 +96,10 @@ const MobNavbar = () => {
             <Link to="/search">
               <Search size={32} color="#ffffff" />
             </Link>
-            
+
             <Link to="/saves">
-              
-            <Bookmark size={32} color="#ffffff" />
+              <Bookmark size={32} color="#ffffff" />
             </Link>
-            
 
             {isAuthenticated ? (
               <div
@@ -113,10 +109,12 @@ const MobNavbar = () => {
               >
                 <Smile size={32} color="#ffffff" />
                 {showDropdown && (
-                  <div className="absolute right-0 mt-0 bg-black r.
-                  ounded shadow-md text-white-800 user-dropdown">
+                  <div
+                    className="absolute right-0 mt-0 bg-black r.
+                  ounded shadow-md text-white-800 user-dropdown"
+                  >
                     <Link
-                      to="/"
+                      to="/user"
                       className="block px-4 py-2 dropdown-item hover:bg-gray-800"
                       onClick={handleDropdownHide}
                     >

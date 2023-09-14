@@ -42,14 +42,15 @@ const Home = () => {
             56 GRILLED RECIPE <br /> CHICKEN
           </h1>
           {/* Pass the category prop to Ideas */}
-          <button
+           <button
             onClick={() =>
               handleCategoryClick("grilled chicken", " 56 GRILLED RECIPE")
             } // Pass the category as an argument to a function
-            className="w-32 focus:outline-none sm:w-60 text-black bg-yellow-400 rounded-lg text-[16px] sm:text-xl px-1 py-2 sm:px-12 sm:py-4 mr-2 mb-2 mt-2 sm:absolute sm:top-[70%] sm:left-10 md:left-32"
+            className="z-0 w-32 focus:outline-none sm:w-60 text-black bg-yellow-400 rounded-lg text-[16px] sm:text-xl px-1 py-2 sm:px-12 sm:py-4 mr-2 mb-2 mt-2 sm:absolute sm:top-[70%] sm:left-10 md:left-32"
           >
             SEE THEM ALL
-          </button>
+          </button> 
+        
         </div>
       </div>
       <div className="w-full h-10 mt-10 mb-14 bg-[#f2f2f2]"></div>

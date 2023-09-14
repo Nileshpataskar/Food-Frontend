@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import user1 from "../image/user1.png";
+import axios from "axios";
 import {
   ArrowDownToLine,
   Bookmark,
@@ -12,11 +13,17 @@ import {
   ShoppingBasket,
   Watch,
 } from "lucide-react";
+import { useAuth0 } from "@auth0/auth0-react";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Recipe = () => {
   const navigate = useNavigate(); // Use useNavigate to navigate between routes
 
   const [comments, setComments] = useState("");
+  const [isSaved, setIsSaved] = useState(false); // State to track if the recipe is saved
+
+  const { user, isAuthenticated } = useAuth0();
 
   const location = useLocation();
   const recipe = location.state?.recipe || null;
@@ -29,17 +36,11 @@ const Recipe = () => {
       .then((data) => {
         // Assuming the data is an array of comments
         setComments(data.Result);
-
-        console.log("Data", data.Result);
       })
       .catch((error) => {
         console.error("Error fetching data:", error);
       });
-  }, []);
-
-  if (!recipe) {
-    return <div>No recipe data found.</div>;
-  }
+  }, [comments]);
 
   const handleIncrementServes = () => {
     setServes(serves + 1);
@@ -51,23 +52,50 @@ const Recipe = () => {
     }
   };
 
-  const randomNumber = Math.floor(Math.random() * 10);
+  const saveRecipe = async () => {
+    if (!isAuthenticated) {
+      // Handle the case when the user is not authenticated
+      console.error("User is not authenticated.");
+      toast.error("Please log in to save the recipe.");
+      return;
+    }
+    try {
+      // Make a POST request to save the recipe
+      const response = await axios.post(
+        "https://foodbackend-5bdj.onrender.com/addrecipe", // Replace with your actual backend endpoint
+        {
+          userid: user.sub, // Replace with the logged-in user's ID
+          label: recipe.label,
+          recipeDescription: recipe.image,
+          calories: recipe.category,
+          source: recipe.source,
+          totalTime: recipe.totalTime,
+          ingredients: recipe.ingredients,
+          ingredientLines:recipe.ingredientLines,
+          image: recipe.image,
+        }
+      );
 
-  console.log(randomNumber);
+      if (response.status === 200) {
+        setIsSaved(true); // Set the state to indicate that the recipe is saved
+        toast.success("Recipe saved successfully!");
+      }
+    } catch (error) {
+      console.error("Error saving recipe:", error);
+      toast.error("Recipe is already saved");
+    }
+  };
 
   return (
     <div>
-      {/* {console.log("comment", comments[re])} */}
       <div className="flex flex-row justify-between h-14 items-center pl-3 pr-3 bg-[#F5CE35] font-cabin">
-        <p onClick={() => navigate(-1)}>{"< "}PREV</p>{" "}
-        {/* Use navigate to go back */}
-        <p onClick={() => navigate(1)}>NEXT {" >"}</p>{" "}
-        {/* Use navigate to go forward */}
+        <p onClick={() => navigate(-1)}>{"< "}PREV</p>
+        <p onClick={() => navigate(1)}>NEXT {" >"}</p>
       </div>
 
       <div className="ml-4 mr-4 sm:pl-16 sm:pr-16">
         <p className="text-[#1769c2] mt-2 font-normal font-cabin">
-          {recipe.mealType.join(", ")}
+          {recipe.mealType?.join(", ")}
         </p>
         <h1 className="text-xl font-semibold md:text-3xl font-cabin">
           {recipe.label}
@@ -79,21 +107,22 @@ const Recipe = () => {
           <div className="box-border flex items-center justify-between pl-2 pr-2">
             <div className="flex items-center gap-5 rounded-full">
               <img src={user1} alt="" width={50} className="rounded-full" />
-
               <div className="flex flex-col">
                 <p className="font-medium">Submitted by</p>
                 <p className="font-medium text-[#1769c2]">{recipe.source}</p>
               </div>
             </div>
+
             <MoreHorizontal color="#9c1f1e" />
           </div>
+          <p>"A wonderful combination of flavors and color. Quick and easy for week day meals and a wonderful entree for a dinner party. Joining Zaar has reunited me with many old favorites long lost in my 35 year old collection of recipes. This recipe, written on the back of a sales slip, probably came from a doctor's or dentist's office as I looked through magazines while waiting to be seen."</p>
 
           <div className="">
-          "A great afternoon snack! If you don't have a favoured pizza sauce use tomato paste and add some dried Italian herbs. Can be served hot or cold...great for the lunch box."
+            {recipe.description}
           </div>
 
           <div className="flex gap-2 mt-5 mb-5">
-            <span className="bg-[#f2f2f2] w-1/4 flex justify-center p-2 box-border text-[#464646]">
+            <span className="bg-[#f2f2f2] w-1/4 flex justify-center p-2 box-border text-[#464646]" onClick={saveRecipe}>
               <Bookmark size={30} />
             </span>
             <span className="bg-[#f2f2f2] w-1/4 flex justify-center p-2 box-border  text-[#464646]">
@@ -105,6 +134,8 @@ const Recipe = () => {
             <span className="bg-[#f2f2f2] w-1/4 flex justify-center p-2 box-border  text-[#464646]">
               <Forward size={30} />
             </span>
+            
+         
           </div>
 
           <img
@@ -120,7 +151,6 @@ const Recipe = () => {
             <span>I MADE THIS</span>
           </button>
 
-          {/* information */}
           <div className="flex flex-col w-full h-40 pt-3 pl-2 ">
             <div className="flex gap-3">
               <span>
@@ -132,7 +162,7 @@ const Recipe = () => {
               <span>
                 <ShoppingBasket />
               </span>
-              <span>Ingredients: {recipe.ingredients.length} </span>
+              <span>Ingredients: {recipe.ingredients?.length} </span>
             </div>
 
             <div className="flex justify-between gap-3">
@@ -168,7 +198,7 @@ const Recipe = () => {
           <div className="flex flex-col">
             <h2 className="mt-4 mb-4 text-xl font-cabin">Ingredients </h2>
             <ul className="flex flex-col gap-5 ">
-              {recipe.ingredients.map((ingredient, index) => (
+              {recipe.ingredients?.map((ingredient, index) => (
                 <li key={index} className="flex gap-5">
                   <span className="text-sm font-cabin">
                     {ingredient.quantity}
@@ -184,7 +214,7 @@ const Recipe = () => {
           <div className="flex flex-col">
             <h2 className="mt-4 mb-4 text-xl font-cabin">Direction </h2>
             <ul className="flex flex-col gap-5 ">
-              {recipe.ingredientLines.map((line, index) => (
+              {recipe.ingredientLines?.map((line, index) => (
                 <li key={index} className="flex gap-5">
                   <span className="text-sm font-cabin">{line}</span>
                 </li>
@@ -193,6 +223,7 @@ const Recipe = () => {
           </div>
         </div>
       </div>
+      <ToastContainer position="top-right" autoClose={5000} hideProgressBar />
     </div>
   );
 };

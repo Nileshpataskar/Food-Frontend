@@ -2,15 +2,15 @@ export const navData = [
     {
       menu: "RECIPES",
       submenu: [
-        "Drink & Cocktail Recipes",
-        "Side Dish Recipes",
-        "Grilling & BBQ Recipes",
-        "Microwave Recipes",
         "Breakfast & Brunch Recipes",
         "Lunch Recipes",
         "Appetizers & Snack Recipes",
         "Dinner Recipes",
         "Dessert Recipes",
+        "Drink & Cocktail Recipes",
+        "Side Dish Recipes",
+        "Grilling & BBQ Recipes",
+        "Microwave Recipes",
         "Quick & Easy Recipes",
         "Slow-Cooker Recipes",
         "Air Fryer Recipes",
@@ -20,11 +20,11 @@ export const navData = [
     {
       menu: "POPULAR",
       submenu: [
-        "Microwave Recipes",
-        "Quick & Easy Recipes",
         "Drink & Cocktail Recipes",
         "Side Dish Recipes",
         "Grilling & BBQ Recipes",
+        "Microwave Recipes",
+        "Quick & Easy Recipes",
         "Slow-Cooker Recipes",
         "Air Fryer Recipes",
         "Instant Pot Recipes",
