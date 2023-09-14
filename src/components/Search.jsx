@@ -1,11 +1,9 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { SearchIcon, X } from "lucide-react";
-// import { fetchData } from "../service.js";
-import "../css/Search.css";
 import { Link } from "react-router-dom";
 
 const Search = () => {
-  const [searchedTerm, setSearchedTerm] = useState("Burger");
+  const [searchedTerm, setSearchedTerm] = useState("Fries");
   const [data, setData] = useState(null);
 
   const fetchData = async (defaultQuery) => {
@@ -26,7 +24,12 @@ const Search = () => {
     fetchData(searchQuery).then((response) => {
       setData(response);
     });
-  }, [setData]); 
+  }, [setData]);
+
+  const clearSearch = () => {
+    setSearchedTerm("");
+    setData(null);
+  };
 
   useEffect(() => {
     if (searchedTerm) {
@@ -105,8 +108,16 @@ const Search = () => {
                 </li>
               </span>
               <span className="flex gap-2">
-                <li className="md:text-[#787777] clear ">clear</li>
-                <li className="text-[#787777]">
+                <li
+                  className="md:text-[#787777] clear"
+                  onClick={clearSearch}
+                >
+                  clear
+                </li>
+                <li
+                  className="text-[#787777]"
+                  onClick={clearSearch}
+                >
                   <X />
                 </li>
               </span>
