@@ -11,6 +11,8 @@ import MobNavbar from "./components/MobNavbar";
 import Saves from "./components/Saves";
 import MyBoards from "./components/Myboard";
 import UserPage from "./components/UserPage";
+import Explore from "./components/Explore";
+import SearchFooter from "./components/SearchFooter";
 
 const App = () => {
   const [isMobile, setIsMobile] = useState(false);
@@ -39,10 +41,15 @@ const App = () => {
         <Route path="/ideas" element={<Ideas />} />
         <Route path="/saves" element={<Saves />} />
         <Route path="/board" element={<MyBoards />} />
-        <Route path="/user" element={<UserPage />} />
+        <Route path='/userprofile/:filtername' element={<UserPage />}/>
+  
+        <Route path="/explore" element={<Explore />} />
+        
+        
 
 
       </Routes>
+      <SearchFooter/>
       <Footer />
     </div>
   );

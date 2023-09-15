@@ -114,7 +114,14 @@ const MobNavbar = () => {
                   ounded shadow-md text-white-800 user-dropdown"
                   >
                     <Link
-                      to="/user"
+                      to="/explore"
+                      className="block px-4 py-2 dropdown-item hover:bg-gray-800"
+                      onClick={handleDropdownHide}
+                    >
+                      Explore
+                    </Link>
+                    <Link
+                      to="/userprofile/activity "
                       className="block px-4 py-2 dropdown-item hover:bg-gray-800"
                       onClick={handleDropdownHide}
                     >

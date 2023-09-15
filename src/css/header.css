@@ -248,7 +248,7 @@ button {
   }
 }
 
-@media screen and (min-width: 744px) and (max-width: 1209px) {
+@media screen and (min-width: 744px) and (max-width: 1300px) {
   #mobile-menu-icon {
     display: block;
     margin-right: 12px;

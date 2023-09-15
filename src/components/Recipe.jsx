@@ -30,6 +30,11 @@ const Recipe = () => {
 
   const [serves, setServes] = useState(1); // State for the number of serves
 
+
+  const printPage = () => {
+    window.print(); // This triggers the browser's print dialog
+  };
+   
   useEffect(() => {
     fetch("https://foodbackend-5bdj.onrender.com/fetchcomments")
       .then((response) => response.json())
@@ -86,6 +91,60 @@ const Recipe = () => {
     }
   };
 
+  const downloadRecipe = () => {
+    const recipeText = `
+      Recipe: ${recipe.label}
+      Source: ${recipe.source}
+      Total Time: ${recipe.totalTime} mins
+      Ingredients: 
+      ${recipe.ingredients?.map((ingredient) => `- ${ingredient.quantity} ${ingredient.food}`).join("\n")}
+      
+      Directions:
+      ${recipe.ingredientLines?.join("\n")}
+    `;
+
+    // Create a Blob object with the recipe text
+    const blob = new Blob([recipeText], { type: "text/plain" });
+
+    // Create a temporary anchor element to trigger the download
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(blob);
+    a.download = `${recipe.label}_recipe.txt`; // Specify the filename
+    a.style.display = "none";
+
+    // Append the anchor to the body and trigger the download
+    document.body.appendChild(a);
+    a.click();
+
+    // Cleanup
+    document.body.removeChild(a);
+    URL.revokeObjectURL(a.href);
+  };
+
+  const shareRecipe = () => {
+    if (navigator.share) {
+      navigator
+        .share({
+          title: recipe.label,
+          text: "Check out this delicious recipe!",
+          url: window.location.href, // Share the current page URL
+        })
+        .then(() => {
+          console.log("Recipe shared successfully.");
+        })
+        .catch((error) => {
+          console.error("Error sharing recipe:", error);
+        });
+    } else {
+      // Fallback for browsers that do not support Web Share API
+      console.log("Web Share API not supported.");
+      // You can provide a custom sharing solution here, like opening a share modal.
+      // For example, you can use a popular library like react-share to implement sharing functionality.
+    }
+  };
+  
+
+
   return (
     <div>
       <div className="flex flex-row justify-between h-14 items-center pl-3 pr-3 bg-[#F5CE35] font-cabin">
@@ -125,13 +184,14 @@ const Recipe = () => {
             <span className="bg-[#f2f2f2] w-1/4 flex justify-center p-2 box-border text-[#464646]" onClick={saveRecipe}>
               <Bookmark size={30} />
             </span>
-            <span className="bg-[#f2f2f2] w-1/4 flex justify-center p-2 box-border  text-[#464646]">
+            <span className="bg-[#f2f2f2] w-1/4 flex justify-center p-2 box-border  text-[#464646]" onClick={downloadRecipe}>
               <ArrowDownToLine size={30} />{" "}
             </span>
-            <span className="bg-[#f2f2f2] w-1/4 flex justify-center p-2 box-border  text-[#464646]">
+            <span className="bg-[#f2f2f2] w-1/4 flex justify-center p-2 box-border  text-[#464646]"     onClick={printPage} // Call the print function when the "Print" button is clicked
+             >
               <Printer size={30} />
             </span>
-            <span className="bg-[#f2f2f2] w-1/4 flex justify-center p-2 box-border  text-[#464646]">
+            <span className="bg-[#f2f2f2] w-1/4 flex justify-center p-2 box-border  text-[#464646]" onClick={shareRecipe}>
               <Forward size={30} />
             </span>
             
@@ -144,7 +204,7 @@ const Recipe = () => {
             className="md:w-[70%] md:h-[400px] "
           />
 
-          <button className="w-full flex justify-center items-center gap-6 mt-2 mb-2 font-cabin bg-[#f5ce35] box-border p-2">
+          <button className="w-full flex justify-center items-center gap-6 mt-2 mb-2 font-cabin bg-[#f5ce35] box-border p-2" >
             <span>
               <Camera size={30} />
             </span>

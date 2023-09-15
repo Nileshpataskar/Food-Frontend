@@ -1,10 +1,18 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { SearchIcon, X } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 const Search = () => {
-  const [searchedTerm, setSearchedTerm] = useState("Fries");
   const [data, setData] = useState(null);
+  const location = useLocation();
+
+  const [searchedTerm, setSearchedTerm] = useState(
+    new URLSearchParams(location.search).get("query") || "fries" // Get the query parameter from the URL
+  );
+  useEffect(() => {
+    // Scroll to the top of the page when the component mounts
+    window.scrollTo(0, 0);
+  }, []);
 
   const fetchData = async (defaultQuery) => {
     try {
