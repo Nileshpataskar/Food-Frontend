@@ -113,13 +113,13 @@ const MobNavbar = () => {
                     className="absolute right-0 mt-0 bg-black r.
                   ounded shadow-md text-white-800 user-dropdown"
                   >
-                    <Link
+                    {/* <Link
                       to="/explore"
                       className="block px-4 py-2 dropdown-item hover:bg-gray-800"
                       onClick={handleDropdownHide}
                     >
                       Explore
-                    </Link>
+                    </Link> */}
                     <Link
                       to="/userprofile/activity "
                       className="block px-4 py-2 dropdown-item hover:bg-gray-800"
