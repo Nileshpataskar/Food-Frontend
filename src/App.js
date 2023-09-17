@@ -44,8 +44,6 @@ const App = () => {
         <Route path='/userprofile/:filtername' element={<UserPage />}/>
   
         <Route path="/explore" element={<Explore />} />
-        
-        
 
 
       </Routes>

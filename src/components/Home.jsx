@@ -28,7 +28,7 @@ const Home = () => {
   }, [comments]);
 
   return (
-    <div className="m-4 sm:m-8 sm:my-5 md:m-30 md:my-10">
+    <div className="m-4 sm:m-8 sm:my-5 md:mx-48 md:my-10">
       {/* Breakfast Section */}
       <div className="relative ">
         <img
@@ -179,7 +179,7 @@ const Home = () => {
       <div className="mt-10 mb-5 ">
         <h1 className="my-5 text-2xl font-cabin md:text-4xl">EXPLORE MORE</h1>
 
-        <div className="flex flex-wrap gap-10 md:gap-8">
+        <div className="flex flex-wrap justify-between gap-10 md:gap-8">
           {[
             {
               imgSrc:
@@ -244,7 +244,7 @@ const Home = () => {
       {/* trending now */}
       <div className="mt-5 mb-5 ">
         <h1 className="my-5 text-2xl font-cabin md:text-4xl">TRENDING NOW</h1>
-        <div className="flex flex-wrap gap-10">
+        <div className="flex flex-wrap justify-between gap-10">
           {[
             {
               imgSrc:
@@ -339,7 +339,7 @@ const Home = () => {
       {/* more Ideas  */}
       <div className="mt-5 mb-5 ">
         <h1 className="my-5 text-2xl font-cabin md:text-4xl">MORE IDEAS</h1>
-        <div className="flex flex-wrap gap-10">
+        <div className="flex flex-wrap justify-between gap-10">
           {[
             {
               imgSrc:
@@ -393,6 +393,10 @@ const Home = () => {
             src="https://img.sndimg.com/food/image/upload/f_auto,c_thumb,q_55,w_1280,ar_16:9/v1/img/upload/editorial/how-to-peel-peaches/peel-peaches-beauty-1.jpg"
             alt=""
             className="w-full md:w-2/3"
+
+            onClick={() =>
+              handleCategoryClick("Peal Peaches", " How to Peal Peaches,Three Ways")
+            }
           />
 
           <div className="flex-col justify-start m-6 md:m-10 fle md:gap-5 md:flex-col sm:flex-col">

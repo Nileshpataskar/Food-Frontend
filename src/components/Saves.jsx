@@ -47,12 +47,10 @@ const Saves = () => {
 
   
 
-  const handleCategoryClick = (newCategory, newTitle) => {
-    navigate("/ideas", { state: { category: newCategory, title: newTitle } });
-  };
+
   return (
     <>
-      <div id="saved-page">
+      <div id="saved-page" className="">
         <div className="text-white bg-black botext-[#892074] border-b-6">
           <h2 className="h-10 m-0 text-2xl tracking-wider text-center">
             SAVES
@@ -81,9 +79,9 @@ const Saves = () => {
         </div>
         <div
           id="saved-page-recipes"
-          className="box-border flex flex-wrap gap-10 px-6 py-5 bg-gray-200 lg:px-10"
+          className="box-border flex flex-wrap justify-between gap-10 px-6 py-5 bg-gray-200 lg:px-10 md:mx-48"
         >
-          <div className="flex flex-col items-center justify-center w-full bg-white md:w-[300px] sm:w-[40%] h-96 lg:mr-8">
+          <div className="flex flex-col items-center justify-center w-full bg-white md:w-[300px] sm:w-[40%] h-96 ">
             <PlusCircle
               id="saved-page-recipes-plus-icon"
               className="text-[#892074] text-2xl cursor-pointer"
@@ -132,37 +130,7 @@ const Saves = () => {
                  <Trash size={24} />
                </button> 
            </div>
-          //   <Link
-          //   key={recipe._id}
-          //   to={`/recipe/${recipe._id}`} // Use the recipe ID in the pathname
-          //   state={{ recipe }} // Pass the recipe object as state
-          //  className="flex flex-col h-96  relative  w-full bg-[#f2f2F2] sm:w-[40%]  md:w-[300px] md:h-96 lg:mr-8"
-          //   >
-          //     <div className="">
-          //       <img
-          //         src={recipe.image}
-          //         alt=""
-          //         className="w-full h-64 md:w-96"
-          //       />
-          //       <h3 className="mt-2 text-xl font-semibold text-[#111]">
-          //         {recipe.label?.length > 12
-          //           ? `${recipe.label.substring(0, 20)}...`
-          //           : recipe.label}
-          //       </h3>
-          //       <h3 className="mt-2 text-lg font-semibold text-[#111]">
-          //         {recipe.source}
-          //       </h3>
-
-          //       <button
-          //         className="absolute mt-2 text-red-500 cursor-pointer bottom-4 right-5 hover:text-red-700"
-          //         onClick={() => deleteRecipe(recipe._id)}
-          //       >
-          //         <Trash size={24} />
-          //       </button>
-          //     </div>
-          //     {/* Display recipe details */}
-          //     {/* Add more recipe details here */}
-          //   </Link>
+          
           ))}
         </div>
       </div>

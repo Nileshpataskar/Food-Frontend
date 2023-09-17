@@ -35,9 +35,9 @@ const MyBoards = () => {
         </div>
         <div
           id="saved-page-recipes"
-          className="box-border flex flex-wrap px-6 py-5 bg-gray-200 lg:px-10"
+          className="box-border flex flex-wrap px-6 py-5 bg-gray-200 lg:px-10 md:mx-48"
         >
-          <div className="flex flex-col items-center justify-center w-full bg-white md:w-[15%] h-80 lg:mr-8">
+          <div className="flex flex-col items-center justify-center w-full bg-white md:w-[300px] sm:w-[40%] h-96 ">
             <PlusCircle
               id="saved-page-recipes-plus-icon"
               className="text-[#892074] text-2xl cursor-pointer"

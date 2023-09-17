@@ -27,7 +27,7 @@ const SearchFooter = () => {
       </div>
       <button
         onClick={handleSearch}
-        className="z-10 w-48 focus:outline-none sm:w-60 text-black bg-yellow-400 rounded-lg text-[16px] sm:text-xl px-1 py-2"
+        className="z-0 w-48 focus:outline-none sm:w-60 text-black bg-yellow-400 rounded-lg text-[16px] sm:text-xl px-1 py-2"
       >
         SEARCH
       </button>

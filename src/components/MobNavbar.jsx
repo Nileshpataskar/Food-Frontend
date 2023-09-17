@@ -11,7 +11,7 @@ import { useAuth0 } from "@auth0/auth0-react";
 const MobNavbar = () => {
   const [isMobile, setIsMobile] = useState(false);
   const [openItems, setOpenItems] = useState({});
-  const { isAuthenticated, loginWithRedirect, logout} = useAuth0();
+  const { isAuthenticated, loginWithRedirect, logout } = useAuth0();
   const [showDropdown, setShowDropdown] = useState(false);
 
   const navigate = useNavigate();
@@ -113,13 +113,13 @@ const MobNavbar = () => {
                     className="absolute right-0 mt-0 bg-black r.
                   ounded shadow-md text-white-800 user-dropdown"
                   >
-                    {/* <Link
+                    <Link
                       to="/explore"
                       className="block px-4 py-2 dropdown-item hover:bg-gray-800"
                       onClick={handleDropdownHide}
                     >
                       Explore
-                    </Link> */}
+                    </Link>
                     <Link
                       to="/userprofile/activity "
                       className="block px-4 py-2 dropdown-item hover:bg-gray-800"

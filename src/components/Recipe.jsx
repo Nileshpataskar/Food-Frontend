@@ -30,6 +30,7 @@ const Recipe = () => {
 
   const [serves, setServes] = useState(1); // State for the number of serves
 
+  console.log("saved",isSaved)
 
   const printPage = () => {
     window.print(); // This triggers the browser's print dialog
@@ -46,6 +47,10 @@ const Recipe = () => {
         console.error("Error fetching data:", error);
       });
   }, [comments]);
+
+  useEffect(()=>{
+    window.scrollTo(0,0);
+  },[])
 
   const handleIncrementServes = () => {
     setServes(serves + 1);
@@ -142,6 +147,7 @@ const Recipe = () => {
       // For example, you can use a popular library like react-share to implement sharing functionality.
     }
   };
+  
   
 
 

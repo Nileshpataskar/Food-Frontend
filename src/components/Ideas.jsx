@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 
 import { Link, useLocation } from "react-router-dom";
 
-const Home = () => {
+const Ideas = () => {
   const [breakfastRecipes, setBreakfastRecipes] = useState([]);
   //  const [loading, setLoading] = useState(true);
 
@@ -29,7 +29,6 @@ const Home = () => {
     }
   };
 
-
   useEffect(() => {
     // Fetch breakfast recipes
     fetchData(category)
@@ -40,53 +39,66 @@ const Home = () => {
         console.error("Error fetching breakfast recipes:", error);
       });
   }, [category]);
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   return (
-    <div className="m-2 sm:m-8 sm:my-5 md:m-44 md:my-10 md:w-[50%] sm:mb-28 ">
-      <section className="mb-36 recipe-section">
-        <h2 className="mb-4 text-[44px] font-bold font-cabin">
-          {title || "New Recipe Ideas"}
-        </h2>
+    <div className="flex">
+      <div className="m-2 sm:m-8 sm:my-5 md:m-44 md:my-10 md:w-[50%] sm:mb-28 ">
+        <section className="mb-36 recipe-section">
+          <h2 className="mb-4 text-[44px] font-bold font-cabin">
+            {title || "New Recipe Ideas"}
+          </h2>
 
-        <p className="text-lg">
-        Feeling a little wilted due to summer's hot temps? These cool, crisp, fresh salads are anything but. From leafy greens to hearty grains, these tricked-out salads will toss things up in all the right ways. Get even more inspiration with our favorite unique salad recipes.
-        </p>
+          <p className="text-lg">
+            Feeling a little wilted due to summer's hot temps? These cool,
+            crisp, fresh salads are anything but. From leafy greens to hearty
+            grains, these tricked-out salads will toss things up in all the
+            right ways. Get even more inspiration with our favorite unique salad
+            recipes.
+          </p>
 
-        <div className="relative flex flex-col mt-10 gap-44 h-fit md:flex-col md:flex-wrap">
-          {breakfastRecipes.map((recipe, index) => (
-            <Link
-              key={index}
-              to={`/recipe/${index}`} // Use a simple pathname
-              state={{ recipe: recipe.recipe }} // Pass the recipe object as state
-              className="relative w-full bg-white rounded-lg shadow-md recipe-card"
-            >
-              <img
-                src={recipe.recipe.image}
-                alt={recipe.recipe.label}
-                className="object-cover w-full h-[300px] rounded"
-              />
+          <div className="relative flex flex-col mt-10 gap-44 h-fit md:flex-col md:flex-wrap">
+            {breakfastRecipes.map((recipe, index) => (
+              <Link
+                key={index}
+                to={`/recipe/${index}`} // Use a simple pathname
+                state={{ recipe: recipe.recipe }} // Pass the recipe object as state
+                className="relative w-full bg-white rounded-lg shadow-md recipe-card"
+              >
+                <img
+                  src={recipe.recipe.image}
+                  alt={recipe.recipe.label}
+                  className="object-cover w-full h-[300px] rounded"
+                />
 
-              <div className="absolute h-[100%] z-10 bg-white bottom-[-38%] sm:bottom-[-25%] left-[7%] w-[85%] border-b-[#77E2E1] border-b-[6px]  p-6 box-border">
-                <h1 className="text-xl md:2xl font-cabin">Recipe</h1>
-                {/* <h1 className="mb-2 text-3xl font-normal md:text-5xl font-cabin">{recipe.recipe.label}</h1> */}
+                {console.log("recipes", recipe.recipe.images.large)}
+                <div className="absolute h-[65%] z-10 bg-[#fffcfc] bottom-[-38%] sm:bottom-[-25%] left-[7%] w-[85%] border-b-[#77E2E1] border-b-[6px]  p-6 box-border">
+                  <h1 className="text-xl md:2xl font-cabin">Recipe</h1>
+                  {/* <h1 className="mb-2 text-3xl font-normal md:text-5xl font-cabin">{recipe.recipe.label}</h1> */}
 
-                <h1 className="mb-2 text-3xl font-normal md:text-5xl font-cabin">
-                  {recipe.recipe.label.length > 24
-                    ? `${recipe.recipe.label.substring(0, 30)}...`
-                    : recipe.recipe.label}
-                </h1>
+                  <h1 className="mb-2 text-3xl font-normal md:text-5xl font-cabin">
+                    {recipe.recipe.label.length > 24
+                      ? `${recipe.recipe.label.substring(0, 25)}...`
+                      : recipe.recipe.label}
+                  </h1>
 
-                <p className="mb-6 md:text-lg">
-                  “We’ve tried several different recipes and this is the best.
-                  Nothing beats homemade pasta! A great recipe.”
-                </p>
-              </div>
-            </Link>
-          ))}
-        </div>
-      </section>
+                  <p className="mb-6 md:text-lg">
+                    “We’ve tried several different recipes and this is the best.
+                    Nothing beats homemade pasta! A great recipe.”
+                  </p>
+                </div>
+              </Link>
+            ))}
+          </div>
+        </section>
+      </div>
+      <div className="hidden  md:w-80 md:h-[600px] md:mt-12 sticky top-16 md:flex justify-center items-center  border-2">
+        <h1 className="text-4xl font-thin font-cabin">Advertisement</h1>
+      </div>
     </div>
   );
 };
 
-export default Home;
+export default Ideas;
